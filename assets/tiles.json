@@ -1,0 +1,217 @@
+{
+ "image": "tiles.png",
+ "cell": {
+  "w": 16,
+  "h": 16
+ },
+ "anchor": {
+  "x": 8,
+  "y": 15
+ },
+ "animations": {
+  "ground_top": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     0,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "ground_top_l": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     16,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "ground_top_r": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     32,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "ground_top_m": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     48,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "dirt": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     64,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "stone_top": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     80,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "stone": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     96,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "wood": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     112,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "platform": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     128,
+     0,
+     16,
+     16
+    ]
+   ]
+  },
+  "spikes": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     0,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "crate": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     16,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "coin0": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     32,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "coin1": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     48,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "coin2": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     64,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "coin3": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     80,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "heart": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     96,
+     16,
+     16,
+     16
+    ]
+   ]
+  },
+  "potion": {
+   "fps": 1,
+   "loop": false,
+   "frames": [
+    [
+     112,
+     16,
+     16,
+     16
+    ]
+   ]
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "ember-knight",
+  "version": "1.0.0",
+  "description": "A 2D side-scrolling jumping game with hand-built pixel-art sprite sheets (HTML5 canvas, no dependencies).",
+  "type": "module",
+  "scripts": {
+    "start": "node tools/serve.mjs 8080",
+    "art": "python3 tools/generate_hero.py --preview /tmp/hero.png && python3 tools/generate_enemy.py --preview /tmp/enemy.png && python3 tools/generate_world.py --preview /tmp/world.png",
+    "test": "node tools/headless.mjs --seconds 60 --shot 20 --out /tmp/ember-frames && python3 tools/replay.py /tmp/ember-frames/shot20.json --zoom 2 --outdir /tmp/ember-frames"
+  },
+  "keywords": ["game", "canvas", "html5", "pixel-art", "platformer", "sprite-sheet"],
+  "license": "MIT",
+  "private": true
+}
