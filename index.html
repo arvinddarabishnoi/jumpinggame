@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#07131f" />
+  <title>Gravity//Run — Hillbound</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main id="app" aria-label="Gravity Run game">
+    <canvas id="gameCanvas" aria-label="Game playfield"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <section id="loadingScreen" class="screen loading-screen active" aria-live="polite">
+      <div class="loader-mark"><span></span><span></span><span></span></div>
+      <p>CALIBRATING GRAVITY DRIVE</p>
+    </section>
+
+    <section id="menuScreen" class="screen menu-screen" aria-label="Main menu">
+      <div class="menu-topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark"><span></span><span></span><span></span></div>
+          <div><strong>GRAVITY<span>//</span>RUN</strong><small>HILLBOUND EXPEDITION</small></div>
+        </div>
+        <div class="top-stats">
+          <div class="currency-chip"><span class="coin-dot"></span><b id="menuCoins">0</b><small>COINS</small></div>
+          <button class="icon-button" data-route="settings" aria-label="Open settings">⚙</button>
+        </div>
+      </div>
+
+      <div class="menu-content">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span> SECTOR 01 / GREEN HILLS</div>
+          <h1>DEFY<br><em>DOWN</em></h1>
+          <p>Ride the line between traction and orbit. Climb changing worlds, flip through danger, and bend gravity before the mountain bends you.</p>
+          <div class="hero-records">
+            <div><span>BEST DISTANCE</span><strong id="menuBestDistance">0 M</strong></div>
+            <div><span>BEST COMBO</span><strong id="menuBestCombo">0.0X</strong></div>
+          </div>
+        </div>
+
+        <div class="menu-actions" aria-label="Main menu actions">
+          <button class="menu-button primary" data-action="play"><span class="button-glyph">▶</span><span><b>PLAY RUN</b><small>CAREER / ENDLESS / TRIAL</small></span><i>↗</i></button>
+          <button class="menu-button" data-route="garage"><span class="button-glyph asset-glyph car-glyph"></span><span><b>GARAGE</b><small>TUNE YOUR GRAVITY RIG</small></span><i>↗</i></button>
+          <button class="menu-button" data-route="missions"><span class="button-glyph asset-glyph mission-glyph"></span><span><b>MISSIONS</b><small>DAILY OBJECTIVES &amp; REWARDS</small></span><i>↗</i></button>
+          <button class="menu-button" data-route="shop"><span class="button-glyph asset-glyph shop-glyph"></span><span><b>SUPPLY DEPOT</b><small>UNLOCK RIDES &amp; LOADOUTS</small></span><i>↗</i></button>
+        </div>
+      </div>
+
+      <div class="mode-dock">
+        <div class="dock-label">SELECT OPERATION</div>
+        <div class="mode-tabs" role="tablist" aria-label="Game mode">
+          <button class="mode-tab active" data-mode="career" role="tab">CAREER <small>SECTOR 01</small></button>
+          <button class="mode-tab" data-mode="endless" role="tab">ENDLESS <small>GO FURTHER</small></button>
+          <button class="mode-tab" data-mode="time" role="tab">TIME TRIAL <small>90 SECONDS</small></button>
+          <button class="mode-tab" data-mode="stunt" role="tab">STUNT RUN <small>COMBO HUNT</small></button>
+        </div>
+        <div class="controls-hint"><span>◀ ▶</span> DRIVE <span>W / S</span> AIR CONTROL <span>SPACE</span> NITRO <span>G</span> GRAVITY</div>
+      </div>
+    </section>
+
+    <section id="garageScreen" class="screen panel-screen" aria-label="Garage">
+      <div class="panel-header">
+        <button class="back-button" data-route="menu">← <span>BACK</span></button>
+        <div><div class="eyebrow">WORKSHOP / 01</div><h2>GARAGE <em>LAB</em></h2></div>
+        <div class="panel-currency"><span class="coin-dot"></span><b id="garageCoins">0</b></div>
+      </div>
+      <div class="garage-layout">
+        <div class="garage-preview-card">
+          <div class="preview-header"><span class="tag">ACTIVE RIG</span><span id="garageCarClass">ALL-TERRAIN / A</span></div>
+          <canvas id="garagePreview" width="720" height="360"></canvas>
+          <div class="preview-name"><div><small>GRAVITY RIG</small><h3 id="garageCarName">TRAILBLAZER</h3></div><span id="garageCarLevel">LV. 01</span></div>
+          <div class="garage-tip">Every upgrade changes the way your rig meets the mountain.</div>
+        </div>
+        <div class="garage-right">
+          <div class="section-kicker">AVAILABLE RIGS</div>
+          <div id="carRoster" class="car-roster"></div>
+          <div class="section-kicker upgrades-kicker">SYSTEM UPGRADES <span>MAX LV. 05</span></div>
+          <div id="upgradeGrid" class="upgrade-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="missionsScreen" class="screen panel-screen" aria-label="Missions">
+      <div class="panel-header">
+        <button class="back-button" data-route="menu">← <span>BACK</span></button>
+        <div><div class="eyebrow">COMMAND / OBJECTIVES</div><h2>MISSION <em>BOARD</em></h2></div>
+        <div class="panel-currency mission-streak"><span class="streak-icon">✦</span><b id="missionStars">0</b><small>STARS</small></div>
+      </div>
+      <div class="mission-intro"><div class="mission-orbit">✦</div><div><h3>MAKE THE MOUNTAIN REMEMBER YOU.</h3><p>Three objectives are active on every run. Complete them in any order — risky routes pay better.</p></div></div>
+      <div id="missionList" class="mission-list"></div>
+      <div class="reward-track"><div><span class="eyebrow">EXPEDITION REWARD TRACK</span><strong id="missionRewardText">0 / 3 OBJECTIVES COMPLETE</strong></div><div class="track"><span id="missionRewardFill"></span><i></i><i></i><i></i></div></div>
+    </section>
+
+    <section id="shopScreen" class="screen panel-screen" aria-label="Supply depot">
+      <div class="panel-header">
+        <button class="back-button" data-route="menu">← <span>BACK</span></button>
+        <div><div class="eyebrow">SUPPLY / VEHICLES</div><h2>SUPPLY <em>DEPOT</em></h2></div>
+        <div class="panel-currency"><span class="coin-dot"></span><b id="shopCoins">0</b></div>
+      </div>
+      <div class="shop-layout">
+        <div class="shop-card featured-card"><div class="shop-badge">FIELD TESTED</div><h3>THE MOUNTAIN<br><em>DOESN'T WAIT.</em></h3><p>Unlock rigs from the expedition roster. Each chassis brings a different balance of speed, armor, and air control.</p><button class="inline-action" data-route="garage">OPEN GARAGE ↗</button></div>
+        <div id="shopList" class="shop-list"></div>
+      </div>
+    </section>
+
+    <section id="settingsScreen" class="screen panel-screen" aria-label="Settings">
+      <div class="panel-header">
+        <button class="back-button" data-route="menu">← <span>BACK</span></button>
+        <div><div class="eyebrow">SYSTEM / CONFIG</div><h2>SETTINGS <em>DECK</em></h2></div>
+      </div>
+      <div class="settings-grid">
+        <div class="settings-card"><div class="section-kicker">GAMEPLAY</div>
+          <label class="setting-row"><span><b>SCREEN SHAKE</b><small>Impact and gravity feedback</small></span><input type="checkbox" data-setting="screenShake" checked><i class="toggle"></i></label>
+          <label class="setting-row"><span><b>REDUCED MOTION</b><small>Calm camera and particle mode</small></span><input type="checkbox" data-setting="reducedMotion"><i class="toggle"></i></label>
+          <label class="setting-row"><span><b>HIGH CONTRAST HUD</b><small>Increase telemetry readability</small></span><input type="checkbox" data-setting="highContrast"><i class="toggle"></i></label>
+        </div>
+        <div class="settings-card"><div class="section-kicker">AUDIO</div>
+          <label class="setting-row"><span><b>SOUND FX</b><small>Engine, pickups, stunts</small></span><input type="checkbox" data-setting="sound" checked><i class="toggle"></i></label>
+          <label class="setting-row"><span><b>AMBIENCE</b><small>Wind and world atmosphere</small></span><input type="checkbox" data-setting="ambience" checked><i class="toggle"></i></label>
+          <div class="key-guide"><span>SPACE</span> NITRO <span>G</span> GRAVITY <span>R</span> REWIND <span>ESC</span> PAUSE</div>
+        </div>
+      </div>
+      <div class="save-note"><span class="status-dot"></span> EXPEDITION DATA SAVES LOCALLY ON THIS DEVICE</div>
+    </section>
+
+    <section id="hud" class="hud" aria-label="Run telemetry">
+      <div class="hud-top">
+        <div class="hud-brand"><span class="brand-mark mini"><span></span><span></span><span></span></span><b>G//R</b><span class="world-pill" id="worldPill">GREEN HILLS</span></div>
+        <div class="telemetry-group">
+          <div class="telemetry distance"><small>DISTANCE</small><strong id="distanceValue">0</strong><span>M</span></div>
+          <div class="telemetry score"><small>SCORE</small><strong id="scoreValue">0</strong></div>
+          <button class="hud-icon-button" data-action="pause" aria-label="Pause">Ⅱ</button>
+        </div>
+      </div>
+      <div class="hud-left">
+        <div class="resource-card fuel-resource"><div class="resource-top"><span class="hud-label"><span class="resource-symbol fuel-symbol"></span> FUEL</span><b id="fuelValue">100</b></div><div class="meter"><i id="fuelMeter"></i></div></div>
+        <div class="resource-card"><div class="resource-top"><span class="hud-label"><span class="resource-symbol gravity-symbol">◈</span> GRAVITY CORE</span><b id="gravityValue">100</b></div><div class="meter purple"><i id="gravityMeter"></i></div></div>
+        <div class="resource-card compact-resource"><div class="resource-top"><span class="hud-label"><span class="resource-symbol nitro-symbol">N</span> NITRO</span><b id="nitroValue">100</b></div><div class="meter cyan"><i id="nitroMeter"></i></div></div>
+      </div>
+      <div class="hud-right">
+        <div class="mission-hud"><div class="mission-hud-top"><span class="eyebrow">ACTIVE MISSION</span><b id="missionHudProgress">0%</b></div><strong id="missionHudText">REACH 1,500 M</strong><div class="meter thin"><i id="missionMeter"></i></div></div>
+        <div class="combo-readout" id="comboReadout"><span>COMBO</span><strong id="comboValue">0.0X</strong></div>
+      </div>
+      <div class="run-status" id="runStatus"><span class="status-dot"></span><b id="runStatusText">SECTOR 01 // DRIVE</b></div>
+      <div class="gravity-mode-chip" id="gravityModeChip"><span>◉</span><b>NORMAL GRAVITY</b></div>
+    </section>
+
+    <section id="touchControls" class="touch-controls" aria-label="Touch controls">
+      <button class="touch-button left" data-action="reverse"><span>←</span><small>BRAKE</small></button>
+      <button class="touch-button right" data-action="accelerate"><span>→</span><small>DRIVE</small></button>
+      <button class="touch-button utility nitro-touch" data-action="nitro"><b>N</b><small>NITRO</small></button>
+      <button class="touch-button utility gravity-touch" data-action="gravity"><b>◈</b><small>GRAVITY</small></button>
+      <button class="touch-button utility rewind-touch" data-action="rewind"><b>↶</b><small>REWIND</small></button>
+    </section>
+
+    <section id="pauseOverlay" class="modal-overlay" aria-label="Paused" aria-hidden="true">
+      <div class="modal-card pause-card"><div class="modal-kicker">RUN CONTROL / PAUSED</div><h2>TIME <em>HOLD</em></h2><p>The mountain is waiting. Your rewind charge is safe.</p><div class="modal-actions"><button class="modal-button primary" data-action="resume">RESUME RUN <span>▶</span></button><button class="modal-button" data-action="restart">RESTART RUN <span>↻</span></button><button class="modal-button quiet" data-route="menu">EXIT TO MENU <span>×</span></button></div></div>
+    </section>
+
+    <section id="gameOverOverlay" class="modal-overlay" aria-label="Run summary" aria-hidden="true">
+      <div class="modal-card results-card"><div class="result-glow"></div><div class="modal-kicker" id="resultKicker">RUN TERMINATED / WRECK</div><h2 id="resultTitle">THE MOUNTAIN <em>WINS</em></h2><p id="resultSubtitle">Your rig held the line for as long as it could.</p><div class="result-stats"><div><small>DISTANCE</small><strong id="resultDistance">0 M</strong></div><div><small>SCORE</small><strong id="resultScore">0</strong></div><div><small>COINS</small><strong id="resultCoins">0</strong></div><div><small>BEST COMBO</small><strong id="resultCombo">0.0X</strong></div></div><div class="new-record" id="newRecord">✦ NEW RECORD ✦</div><div class="modal-actions"><button class="modal-button primary" data-action="restart">RUN IT BACK <span>↻</span></button><button class="modal-button" data-route="garage">TUNE RIG <span>↗</span></button><button class="modal-button quiet" data-route="menu">MAIN MENU <span>×</span></button></div></div>
+    </section>
+
+    <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+  </main>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
